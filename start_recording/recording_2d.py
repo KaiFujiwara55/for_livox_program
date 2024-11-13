@@ -9,11 +9,11 @@ from hokuyolx import HokuyoLX
 # スキャンデータをcsvに変換する
 def scan2csv(timestamp, scan_data, csv_path):
     # scan_dataは二次元配列[[測定角度(rad), 距離(mm)]]
-    dist_list = list(np.ravel(scan_data))
+    dist_angle_taple = [(scan[0], scan[1]) for scan in scan_data]
     
     with open(csv_path, encoding="utf-8", mode="a", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow([timestamp]+dist_list)
+        writer.writerow([timestamp]+dist_angle_taple)
 
 # process管理用のtxtファイルを開く
 def open_txt(txt_path):

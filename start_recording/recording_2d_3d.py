@@ -57,15 +57,22 @@ if __name__ == "__main__":
     # レコード開始ボタンをクリック
     record_button_point = get_point_img(record_start_img)
     click_point(record_button_point)
-    dt = datetime.datetime.timestamp(datetime.datetime.now())
 
     # レコード開始時刻をunix時間で記録
+    dt = datetime.datetime.timestamp(datetime.datetime.now())
     dt_txt_path = f"time_list\\{file_name}.txt"
-    with open(dt_txt_path) as f:
-        f.write(file_name, str(dt))
+    with open(dt_txt_path, mode="w") as f:
+        f.write(str(dt))
 
     # レコード終了してファイル保存画面が出たら終了
     wait_finish_recording()
+
+    # レコード終了時間をunix時間で記録
+    dt = datetime.datetime.timestamp(datetime.datetime.now())
+    with open(dt_txt_path, mode="a") as f:
+        f.write("\n"+str(dt))
+
+    # 3Dデータを保存
     save_file(output_folder+"\\3d\\"+file_name+".lvx")
 
     # 「取得終了」に2次元LiDAR用ステータスを変更
